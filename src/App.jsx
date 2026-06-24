@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import StickerCard from "./components/StickerCard";
+import AlbumSummary from "./components/AlbumSummary";
 import { stickers } from "./data/stickers";
 
 function App() {
@@ -9,9 +10,21 @@ function App() {
     initialState[sticker.id] = "falta";
   });
 
-  const [status, setStatus] = useState(initialState);
+  const [status, setStatus] = useState(() => {
+    const saved = localStorage.getItem("album");
+
+    return saved ? JSON.parse(saved) : initialState;
+  });
+
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("Todas");
+
+  useEffect(() => {
+    localStorage.setItem(
+      "album",
+      JSON.stringify(status)
+    );
+  }, [status]);
 
   const handleStatusChange = (id) => {
     setStatus((prev) => {
@@ -50,27 +63,39 @@ function App() {
     return matchesSearch && matchesFilter;
   });
 
+  const tengo = Object.values(status).filter(
+    (s) => s === "tengo"
+  ).length;
+
+  const repetidas = Object.values(status).filter(
+    (s) => s === "repetida"
+  ).length;
+
+  const faltan = Object.values(status).filter(
+    (s) => s === "falta"
+  ).length;
+
   return (
     <div style={{ padding: "20px" }}>
       <h1>Álbum Mundial 2026</h1>
+
+      <AlbumSummary
+        total={stickers.length}
+        tengo={tengo}
+        repetidas={repetidas}
+        faltan={faltan}
+      />
 
       <input
         type="text"
         placeholder="Buscar figurita"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        style={{
-          padding: "10px",
-          marginRight: "10px",
-        }}
       />
 
       <select
         value={filter}
         onChange={(e) => setFilter(e.target.value)}
-        style={{
-          padding: "10px",
-        }}
       >
         <option>Todas</option>
         <option>Tengo</option>

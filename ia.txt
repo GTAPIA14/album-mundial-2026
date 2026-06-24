@@ -1,4 +1,69 @@
 === Etapa 1 ===
-Prompt: "Crear proyecto React con Vite y cargar datos."
-Resultado: útil.
-Modificaciones: agregué la carpeta data.
+
+Prompt:
+"Crear la estructura de carpetas para un proyecto React con Vite e importar un archivo de datos local."
+
+Resultado:
+La IA explicó cómo crear el proyecto con Vite y cómo importar el archivo stickers.js.
+
+Utilidad:
+Útil.
+
+Modificaciones:
+Creé manualmente la carpeta data y agregué el archivo stickers.js entregado por el docente.
+
+=== Etapa 2 ===
+
+Prompt:
+"Crear un componente StickerCard que reciba number, name, group y status como props."
+
+Resultado:
+La IA generó el componente correctamente y mostró la información de cada figurita.
+
+Utilidad:
+Útil.
+
+Modificaciones:
+Ajusté los estilos de las tarjetas y los colores según el estado.
+
+=== Etapa 3 ===
+
+Prompt:
+"Implementar useState para administrar el estado de cada figurita y cambiarlo al hacer clic."
+
+Resultado:
+La IA generó la lógica para alternar entre los estados falta, tengo y repetida.
+
+Utilidad:
+Útil.
+
+Modificaciones:
+Adapté la lógica al formato solicitado en la evaluación y validé el cambio visual de las tarjetas.
+
+=== Etapa 4 ===
+
+Prompt:
+"Agregar búsqueda por nombre o código y filtros por estado utilizando React."
+
+Resultado:
+La IA generó la lógica para buscar figuritas y filtrar por estado.
+
+Utilidad:
+Útil.
+
+Modificaciones:
+Ajusté la interfaz de búsqueda y agregué el contador de figuritas visibles.
+
+=== Etapa 5 ===
+
+Prompt:
+"Crear un componente de resumen del álbum e implementar persistencia con localStorage."
+
+Resultado:
+La IA generó el componente AlbumSummary y el uso de useEffect para guardar y recuperar datos.
+
+Utilidad:
+Útil.
+
+Modificaciones:
+Validé el cálculo de estadísticas y comprobé que la información se mantuviera al recargar la página.
