@@ -1,0 +1,4 @@
+=== Etapa 1 ===
+Prompt: "Crear proyecto React con Vite y cargar datos."
+Resultado: útil.
+Modificaciones: agregué la carpeta data.
