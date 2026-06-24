@@ -3,7 +3,6 @@ import StickerCard from "./components/StickerCard";
 import { stickers } from "./data/stickers";
 
 function App() {
-
   const initialState = {};
 
   stickers.forEach((sticker) => {
@@ -11,32 +10,75 @@ function App() {
   });
 
   const [status, setStatus] = useState(initialState);
+  const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState("Todas");
 
   const handleStatusChange = (id) => {
     setStatus((prev) => {
+      const current = prev[id];
 
-      const currentStatus = prev[id];
+      let next;
 
-      let nextStatus;
-
-      if (currentStatus === "falta") {
-        nextStatus = "tengo";
-      } else if (currentStatus === "tengo") {
-        nextStatus = "repetida";
+      if (current === "falta") {
+        next = "tengo";
+      } else if (current === "tengo") {
+        next = "repetida";
       } else {
-        nextStatus = "falta";
+        next = "falta";
       }
 
       return {
         ...prev,
-        [id]: nextStatus,
+        [id]: next,
       };
     });
   };
 
+  const filteredStickers = stickers.filter((sticker) => {
+    const matchesSearch =
+      sticker.name.toLowerCase().includes(search.toLowerCase()) ||
+      sticker.code.toLowerCase().includes(search.toLowerCase());
+
+    const currentStatus = status[sticker.id];
+
+    const matchesFilter =
+      filter === "Todas" ||
+      (filter === "Tengo" && currentStatus === "tengo") ||
+      (filter === "Repetidas" && currentStatus === "repetida") ||
+      (filter === "Faltan" && currentStatus === "falta");
+
+    return matchesSearch && matchesFilter;
+  });
+
   return (
     <div style={{ padding: "20px" }}>
       <h1>Álbum Mundial 2026</h1>
+
+      <input
+        type="text"
+        placeholder="Buscar figurita"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        style={{
+          padding: "10px",
+          marginRight: "10px",
+        }}
+      />
+
+      <select
+        value={filter}
+        onChange={(e) => setFilter(e.target.value)}
+        style={{
+          padding: "10px",
+        }}
+      >
+        <option>Todas</option>
+        <option>Tengo</option>
+        <option>Repetidas</option>
+        <option>Faltan</option>
+      </select>
+
+      <h3>Figuritas visibles: {filteredStickers.length}</h3>
 
       <div
         style={{
@@ -44,7 +86,7 @@ function App() {
           flexWrap: "wrap",
         }}
       >
-        {stickers.slice(0, 5).map((sticker) => (
+        {filteredStickers.map((sticker) => (
           <StickerCard
             key={sticker.id}
             number={sticker.code}
